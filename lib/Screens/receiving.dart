@@ -21,7 +21,7 @@ class _ReceivingState extends State<Receiving> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
-          'Receiveing',
+          'Receive',
           style: TextStyle(color: Colors.black, fontSize: 15.0),
         ),
       ),
