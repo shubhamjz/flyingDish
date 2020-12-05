@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:async';
 import 'package:img_demo_app/Network Manager/network_manager.dart';
 import 'package:img_demo_app/Model/product_list.dart';

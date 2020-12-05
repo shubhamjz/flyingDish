@@ -20,7 +20,6 @@ class _RoutesState extends State<Routes> {
         '/':(context)=>Login(),
         '/home':(context)=>Home(),
         '/kitchenselection':(context)=>KitchenSelection(),
-        '/orderdetails':(context)=>OrderDetails(),
         '/orderskudetails':(context)=>OrderSkuDetails(),
         '/receivingsummary':(context)=>ReceivingSummary(),
         '/settings':(context)=>Settings(),
