@@ -3,6 +3,8 @@ import 'package:img_demo_app/Model/product.dart';
 import 'package:img_demo_app/View Model/ECOM/product_view_model.dart';
 import 'package:img_demo_app/Screens/COM/product_item.dart';
 import'package:img_demo_app/View Model/ECOM/cart_view_model.dart';
+import 'package:img_demo_app/Screens/widget/search_bar.dart';
+import 'package:img_demo_app/Screens/cart.dart';
 
 class Com extends StatefulWidget {
 
@@ -23,14 +25,11 @@ class _ComState extends State<Com> {
   FocusNode myFocusNode;
   TextEditingController editingController = TextEditingController();
 
-  final duplicateItems = List<String>.generate(10, (i) => "TRK1Z0MY89202005161 $i");
-  var items = List<String>();
   List<Product> allProductList = List<Product>();
   List<Product> filteredProductList = List<Product>();
 
   @override
   void initState() {
-    //items.addAll(duplicateItems);
     myFocusNode = FocusNode();
     super.initState();
     getProductDetails();
@@ -90,8 +89,17 @@ class _ComState extends State<Com> {
       _aplanceBeenPressed = false;
     });
 
+
+
   }
   @override
+
+  String getCartCount(){
+    num sum = 0;
+    filteredProductList.forEach((Product e){sum += e.qty;});
+    return sum.toString();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -109,7 +117,9 @@ class _ComState extends State<Com> {
 
                 icon: Icon(Icons.add_shopping_cart,color: Colors.white,),
                 onPressed:() {
-                  Navigator.pushNamed(context, '/cart');
+                  Navigator.push(context, new MaterialPageRoute(
+                      builder: (context) => new CartPage(filteredProductList)));
+                  //Navigator.pushNamed(context, '/cart');
                 },
               ),
               Positioned(
@@ -123,7 +133,7 @@ class _ComState extends State<Com> {
                     shape: BoxShape.circle,
                   ),
                   child: Text(
-                    '8',
+                    getCartCount(),
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -184,45 +194,20 @@ class _ComState extends State<Com> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top:20.0,right: 20.0,left: 20,),
-              child: TextField(
-                focusNode: myFocusNode,
-                onChanged: (value) {
-                  filterSearchResults(value);
-                },
-                controller: editingController,
-                style: TextStyle(
-                  fontSize: 13.0,
-                ),
-                decoration: InputDecoration(
-                    isDense: true,                      // Added this
-                    contentPadding: EdgeInsets.all(0),
-
-                    labelStyle: TextStyle(
-                      color: Colors.orangeAccent,
-                    ),
-                    labelText: "Search",
-                    hintText: "search Item ",
-                    prefixIcon: Icon(Icons.search,
-                      color:  Colors.orangeAccent,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                      borderSide: BorderSide(
-                        color: Colors.orangeAccent,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-              ),
-            ),
+            SearchBar(hintText: 'Search by Product',searchTextController: editingController, onTextChanged: (value){
+              print(value);
+              filterSearchResults(value);
+            },),
             Expanded(
-              child:ListView.builder(
+              child: filteredProductList.length == 0 ? Text("No Records Found") : ListView.builder(
                 shrinkWrap: true,
                 itemCount: filteredProductList.length,
-                itemBuilder: (context, index)
-                => ProductItem(filteredProductList[index])
+                itemBuilder: (context, index) => ProductItem( filteredProductList[index], (value){
+                  setState(() {
+                    filteredProductList[index].qty = value;
+                  });
+                 // print(value);
+              }),
               ),
             ),
           ],

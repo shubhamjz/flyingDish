@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:img_demo_app/Model/product.dart';
+import 'package:img_demo_app/View Model/ECOM/product_view_model.dart';
+import 'package:img_demo_app/Screens/Cart/cart_item.dart';
+import 'package:img_demo_app/Utilities/constant.dart';
 
 class CartPage extends StatefulWidget {
+
+  final List<Product> allProductList;
+  CartPage(this.allProductList);
   @override
   State<StatefulWidget> createState() {
     return _CartPageState();
@@ -8,6 +15,28 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
+  double getTotoalCost() {
+    num sum = 0;
+    widget.allProductList.forEach((Product e){sum += e.qty * double.parse(e.retail_price);});
+    return sum;
+  }
+
+  void placedOrderOfCart() async{
+    ProductViewModel  productViewModel = ProductViewModel();
+    final data = await productViewModel.placedOrder(widget.allProductList);
+    print(data);
+    showAlertDialog(context,'STO Confermation no is ' + data);
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -26,14 +55,6 @@ class _CartPageState extends State<CartPage> {
           ],
         ),
         body:
-        //       (context, rebuildOnChange: true)
-        //     .cart
-        //     .length ==
-        //     0
-        //     ? Center(
-        //   child: Text("No items in Cart"),
-        // )
-         //   :
         Container(
             padding: EdgeInsets.all(8.0),
             child: Column(children: <Widget>[
@@ -41,83 +62,13 @@ class _CartPageState extends State<CartPage> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: ListView.builder(
-                        itemCount:3,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                                title: Text('sku des'),
-                                subtitle: Text('qty' +
-                                    " x " +
-                                    'price' +
-                                    " = " + 'total'),
-                                trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(right:10),
-                                        child: GestureDetector(
-                                          onTap: (){
-                                          },
-                                          child: Container(
-                                            width: 20.0,
-                                            height: 20.0,
-                                            decoration: BoxDecoration(
-                                              color: Colors.orange,
-                                              borderRadius: BorderRadius.circular(4.0),
-                                            ),
-                                            child: Icon(
-                                              Icons.remove,
-                                              color: Colors.white,
-                                              size: 15.0,
-                                              // onPressed: () {
-                                              //   setState(() {
-                                              //     widget.productData.qty++;
-                                              //   });
-                                              //
-                                              // }),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      // IconButton(
-                                      //   icon: Icon(Icons.add,color: Colors.orangeAccent,),
-                                      //   onPressed: () {
-                                      //   },
-                                      // ),
-
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10),
-                                        child: GestureDetector(
-                                          onTap: (){
-
-                                          },
-                                          child: Container(
-                                            width: 20.0,
-                                            height: 20.0,
-                                            decoration: BoxDecoration(
-                                              color: Colors.orange,
-                                              borderRadius: BorderRadius.circular(4.0),
-                                            ),
-                                            child: Icon(
-                                              Icons.add,
-                                              color: Colors.white,
-                                              size: 15.0,
-                                              // onPressed: () {
-                                              //   setState(() {
-                                              //     widget.productData.qty++;
-                                              //   });
-                                              //
-                                              // }),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Divider(),
-                                    ]),
-
-                              );
-
-                            },
+                      child: widget.allProductList.length == 0 ? Text("No Records Found") :ListView.builder(
+                        itemCount:widget.allProductList.length,
+                        itemBuilder: (context, index) => CartItem(widget.allProductList[index],(value){
+                          setState(() {
+                            widget.allProductList[index].qty = value;
+                          });
+                        }),
                       ),
                     ),
                   ],
@@ -127,7 +78,7 @@ class _CartPageState extends State<CartPage> {
                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Total: \$ 20",
+                    "Total: \$ " + getTotoalCost().toString(),
                     style: TextStyle(
                         fontSize: 24.0, fontWeight: FontWeight.bold),
                   ),
@@ -137,29 +88,11 @@ class _CartPageState extends State<CartPage> {
                     elevation: 0,
                     child: Text("Place Order"),
                     onPressed: () {
-
+                      placedOrderOfCart();
                     },
                   )
                 ],
               )
-              // Container(
-              //     padding: EdgeInsets.all(8.0),
-              //     child: Text(
-              //       "Total: \$ ",
-              //       style: TextStyle(
-              //           fontSize: 24.0, fontWeight: FontWeight.bold),
-              //     )),
-              // SizedBox(
-              //     width: double.infinity,
-              //     child: RaisedButton(
-              //       color: Colors.yellow[900],
-              //       textColor: Colors.white,
-              //       elevation: 0,
-              //       child: Text("BUY NOW"),
-              //       onPressed: () {
-              //
-              //       },
-              //     ))
             ]
     )
     )

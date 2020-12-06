@@ -24,7 +24,7 @@ class _RoutesState extends State<Routes> {
         '/orderskudetails':(context)=>OrderSkuDetails(),
         '/receivingsummary':(context)=>ReceivingSummary(),
         '/settings':(context)=>Settings(),
-        '/cart':(context)=>CartPage(),
+        //'/cart':(context)=>CartPage(),
        // '/login':(context)=>Login(),
 
       },

@@ -40,27 +40,14 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   void updateReceiveOrderStatus() async{
     // TODO: update code for service response 
-    print('updateReceiveOrderStatus');
-    //_formKey.currentState.save();
-    FocusScope.of(context).unfocus();
-    SnackBarHelper.showLoadingSnackBar(_scaffoldkey, 'updating details...');
-      try {
-        final result = receiveViewModel.updateReceiveOrderStatus(widget._stoObject.unique_id, widget._stoObject.quantity);
-        print('updateReceiveOrderStatus response received');
-        print(result);
-        SnackBarHelper.hideLoadingSnackBar(_scaffoldkey);
-        if (result == null) {
-          SnackBarHelper.showInSnackBar(_scaffoldkey, "Unable to update receive data", Colors.red);
-        } else {
-         // Navigator.pop(context, result);
-        }
-      } catch(exception) {
-        print('exception');
-        print(exception);
-        print('Error while saving skill details : ' + exception.toString());
-        SnackBarHelper.hideLoadingSnackBar(_scaffoldkey);
-        SnackBarHelper.showInSnackBar(_scaffoldkey, 'Unable to update receive data!', Colors.red);
-      }
+    final result = await receiveViewModel.updateReceiveOrderStatus(widget._stoObject.unique_id, widget._stoObject.quantity);
+    print('updateReceiveOrderStatus response received');
+    print(result);
+    if (result == null) {
+      showAlertDialog(context,'Unable to update receive data');
+    } else {
+      showAlertDialog(context,result);
+    }
   }
 
   @override
@@ -153,7 +140,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           padding:
                                           const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
                                           child: Text(
-                                            'Required Quantity',
+                                            'Required',
                                             style: TextStyle(fontSize: 13.0, color: Colors.grey,),
                                           ),
                                         ),
@@ -174,7 +161,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           padding:
                                           const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
                                           child: Text(
-                                            'Received Quantity',
+                                            'Received',
                                             style: TextStyle(fontSize: 13.0, color: Colors.grey,),
                                           ),
                                         ),

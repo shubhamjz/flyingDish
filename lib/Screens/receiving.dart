@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:img_demo_app/Model/Receive/sto_object.dart';
 import 'package:img_demo_app/View Model/Receive/receive_view_model.dart';
-import 'package:img_demo_app/Utilities/snack_bar_helper.dart';
 import 'package:img_demo_app/Screens/receive/receive_item.dart';
 import 'package:img_demo_app/Screens/widget/search_bar.dart';
 
@@ -46,8 +45,6 @@ class _ReceivingState extends State<Receiving> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     var screenSize = MediaQuery.of(context).size;
-    var width = screenSize.width;
-    var height = screenSize.height;
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(
@@ -70,7 +67,7 @@ class _ReceivingState extends State<Receiving> {
           Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
-                child: ListView.builder(
+                child: filteredSTOList.length == 0 ? Text("No Records Found") : ListView.builder(
                   itemCount: filteredSTOList.length,
                     itemBuilder: (context, position) => ReceiveItem(filteredSTOList[position])
                 ),

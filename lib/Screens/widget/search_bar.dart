@@ -36,6 +36,7 @@ class SearchBar extends StatelessWidget {
                 border: InputBorder.none
             ),
             onChanged : (value) {
+              print(value);
               onTextChanged(value);
             }
         ),

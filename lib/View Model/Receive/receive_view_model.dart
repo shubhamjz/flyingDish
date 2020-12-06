@@ -22,15 +22,20 @@ class ReceiveViewModel{
   Future<String> updateReceiveOrderStatus(int uniqueId, int quantity) async {
 
     final response = await manager.invokePostMethod(API_UPDATE_RECEIVEDSTATUS,json.encode(
-        {
+        [{
           'unique_id' : uniqueId,
           'status': 'Received',
           'received_quantity' : quantity,
-        }
+        }]
     ));
     print('updateReceiveOrderStatus response received');
-    print(response);
-    print(response['data']);
-    return response['data'];
+    if(response['status'] == 'Failure') {
+      print('Fail');
+      return response['errorCode'];
+    } else {
+      print('Success');
+      return response['data'];
+    }
+
   }
 }

@@ -25,7 +25,7 @@ class UserOld extends StatelessWidget {
                 null;
               },
               child: Text(
-                'Sing in',
+                'SCAVA',
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.white,

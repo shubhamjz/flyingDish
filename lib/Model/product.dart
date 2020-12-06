@@ -35,7 +35,6 @@ class Product{
     data['sku_id'] = this.sku_id;
     data['sku_description'] = this.sku_description;
     data['listing_status'] = this.listing_status;
-
     return data;
   }
 }

@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentPage = 0;
-  final List<Widget> _pages = [Dashboard(), Com(), Transfer(), Receiving(),More()];
+  final List<Widget> _pages = [Dashboard(), Transfer(), Com(),  Receiving(),More()];
   @override
   Widget build(BuildContext context) {
     return new WillPopScope(
@@ -42,12 +42,12 @@ class _HomeState extends State<Home> {
               title: Text("Dashboard"),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.add_shopping_cart_rounded),
-              title: Text("Place Order"),
+              icon: Icon(Icons.list),
+              title: Text("SOH"),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              title: Text("Transfer"),
+              icon: Icon(Icons.add_shopping_cart_rounded),
+              title: Text("Place Order"),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_basket),
