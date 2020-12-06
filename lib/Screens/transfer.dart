@@ -10,13 +10,15 @@ class _TransferState extends State<Transfer> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0.0,
+        backgroundColor: Colors.indigo,
         title: Text(
             'Transfer', style:TextStyle(
-          color: Colors.black,
+          color: Colors.white,
         ),
         ),
+      ),
+      body: Center(
+        child:Text('This Screen is not Available for the demo'),
       ),
     );
   }

@@ -5,6 +5,9 @@ import 'package:img_demo_app/Screens/COM/product_item.dart';
 import'package:img_demo_app/View Model/ECOM/cart_view_model.dart';
 
 class Com extends StatefulWidget {
+
+  CartModel model = CartModel();
+
   Com ({Key key, this.title}) : super(key: key);
   final String title;
   @override
@@ -48,21 +51,43 @@ class _ComState extends State<Com> {
     });
 
   }
+  void allItem(){
+
+    setState(() {
+      filteredProductList = allProductList;
+      _allhasBeenPressed = true;
+      _grochasBeenPressed = false;
+      _veggieshasBeenPressed = false;
+      _aplanceBeenPressed = false;
+    });
+  }
   void grocerySearchResults(String searchString) {
     setState(() {
       filteredProductList = allProductList.where((element) => element.make.toLowerCase().contains(searchString.toLowerCase())).toList();
+     _allhasBeenPressed = false;
+    _grochasBeenPressed = true;
+    _veggieshasBeenPressed = false;
+    _aplanceBeenPressed = false;
     });
 
   }
   void appliancesSearchResults(String searchString) {
     setState(() {
       filteredProductList = allProductList.where((element) => element.make.toLowerCase().contains(searchString.toLowerCase())).toList();
+      _allhasBeenPressed = false;
+      _grochasBeenPressed = false;
+      _veggieshasBeenPressed = false;
+      _aplanceBeenPressed = true;
     });
 
   }
   void veggisSearchResults(String searchString) {
     setState(() {
       filteredProductList = allProductList.where((element) => element.make.toLowerCase().contains(searchString.toLowerCase())).toList();
+      _allhasBeenPressed = false;
+      _grochasBeenPressed = false;
+      _veggieshasBeenPressed = true;
+      _aplanceBeenPressed = false;
     });
 
   }
@@ -71,18 +96,18 @@ class _ComState extends State<Com> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.indigo,
         elevation: 0.0,
         title: Text(
-          'Place Orders',
-          style: TextStyle(color: Colors.black, fontSize: 15.0),
+          'Place Order',
+          style: TextStyle(color: Colors.white, fontSize: 15.0),
         ),
         actions: [
           Stack(
             children: [
               IconButton(
 
-                icon: Icon(Icons.add_shopping_cart,color: Colors.black,),
+                icon: Icon(Icons.add_shopping_cart,color: Colors.white,),
                 onPressed:() {
                   Navigator.pushNamed(context, '/cart');
                 },
@@ -123,33 +148,27 @@ class _ComState extends State<Com> {
                           color:  _allhasBeenPressed  ? Colors.orangeAccent : Colors.white,
                           child: Text("All"),
                           onPressed: () {
-                        setState(() {
-                          _allhasBeenPressed  = ! _allhasBeenPressed ;
-                        });
+                            allItem();
                       })
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: new RaisedButton(
-                        textColor: _grochasBeenPressed ? Colors.white : Colors.orangeAccent,
-                        color: _grochasBeenPressed ? Colors.orangeAccent : Colors.white,
-                        child: Text("Veggis"),
-                        onPressed: () {
-                          setState(() {
-                            _grochasBeenPressed = !_grochasBeenPressed;
-                          });
-                        }),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: new RaisedButton(
                         textColor: _veggieshasBeenPressed ? Colors.white : Colors.orangeAccent,
                         color: _veggieshasBeenPressed ? Colors.orangeAccent : Colors.white,
+                        child: Text("Veggis"),
+                        onPressed: () {
+                          veggisSearchResults("veggis");
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new RaisedButton(
+                        textColor: _grochasBeenPressed ? Colors.white : Colors.orangeAccent,
+                        color: _grochasBeenPressed ? Colors.orangeAccent : Colors.white,
                         child: Text("Grocery"),
                         onPressed: () {
-                          setState(() {
-                            _veggieshasBeenPressed = !_veggieshasBeenPressed;
-                          });
+                          grocerySearchResults("grocery");
                         }),
                   ),
                   Padding(
@@ -159,10 +178,8 @@ class _ComState extends State<Com> {
                         color: _aplanceBeenPressed ? Colors.orangeAccent : Colors.white,
                         child: Text("Appliances"),
                         onPressed: () {
-                          setState(() {
-                            _aplanceBeenPressed = !_aplanceBeenPressed;
-                          });
-                        }),
+                          appliancesSearchResults("samsung");
+                        } ),
                   )
                 ],
               ),
@@ -201,8 +218,7 @@ class _ComState extends State<Com> {
               ),
             ),
             Expanded(
-              child:
-              ListView.builder(
+              child:ListView.builder(
                 shrinkWrap: true,
                 itemCount: filteredProductList.length,
                 itemBuilder: (context, index)

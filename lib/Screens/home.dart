@@ -18,10 +18,14 @@ class _HomeState extends State<Home> {
     return new WillPopScope(
       onWillPop: () async => false,
       child: new Scaffold(
-        // appBar: new AppBar(
-        //   title: new Text("Home"),
-        //   automaticallyImplyLeading: false,
-        // ),
+         appBar: PreferredSize(
+           preferredSize: Size.fromHeight(5.0),
+           child: new AppBar(
+             backgroundColor: Colors.indigo,
+            automaticallyImplyLeading: false,
+             elevation: 0.0,
+           ),
+         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,
           selectedItemColor: Colors.orangeAccent,
@@ -38,8 +42,8 @@ class _HomeState extends State<Home> {
               title: Text("Dashboard"),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text("Com"),
+              icon: Icon(Icons.add_shopping_cart_rounded),
+              title: Text("Place Order"),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),

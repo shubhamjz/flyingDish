@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:img_demo_app/Model/product.dart';
 import'package:img_demo_app/View Model/ECOM/cart_view_model.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class ProductItem extends StatefulWidget {
+  
+
   @override
   _ProductItemState createState() => _ProductItemState();
   final Product productData;
    ProductItem(this.productData);
+
 }
 
 class _ProductItemState extends State<ProductItem> {
 
+  CartModel model = CartModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +82,7 @@ class _ProductItemState extends State<ProductItem> {
                      });
                      //  widget.productData.qty--;
                    }
+                  // print(widget.productData.sku_description);
                  },
                  child: Container(
                    width: 20.0,
@@ -84,12 +95,6 @@ class _ProductItemState extends State<ProductItem> {
                       Icons.remove,
                       color: Colors.white,
                       size: 15.0,
-                      // onPressed: () {
-                      //   setState(() {
-                      //     widget.productData.qty++;
-                      //   });
-                      //
-                      // }),
                       ),
                  ),
                ),
@@ -102,6 +107,7 @@ class _ProductItemState extends State<ProductItem> {
              if(widget.productData.qty != 0)
                GestureDetector(
                  onTap: (){
+                  //model.addProduct();
                      setState(() {
                        widget.productData.qty++;
                      });
@@ -117,12 +123,6 @@ class _ProductItemState extends State<ProductItem> {
                        Icons.add,
                        color: Colors.white,
                        size: 15.0,
-                       // onPressed: () {
-                       //   setState(() {
-                       //     widget.productData.qty++;
-                       //   });
-                       //
-                       // }),
                  ),
                  ),
                )
@@ -139,6 +139,7 @@ class _ProductItemState extends State<ProductItem> {
                       setState(() {
                         widget.productData.qty++;
                       });
+                     // model.addProduct();
                      // model.addProduct(widget.productData);
                       //cartmodel.addProduct(widget.productData);
                       // //model.updateProduct(_products[index],

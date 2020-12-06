@@ -1,6 +1,6 @@
-import 'package:scoped_model/scoped_model.dart';
 
-class CartModel extends Model {
+
+class CartModel{
 
   List<CartProduct> cart = [];
   double totalCartValue = 0;
@@ -18,8 +18,6 @@ class CartModel extends Model {
     else {
       cart.add(product);
       calculateTotal();
-      notifyListeners();
-
     }
     //print(cart.toString());
   }
@@ -34,7 +32,6 @@ class CartModel extends Model {
     else {
       cart.remove(product);
       calculateTotal();
-      notifyListeners();
     }
   }
 
@@ -43,7 +40,6 @@ class CartModel extends Model {
     cart[index].qty = 0;
     cart.removeWhere((item) => item.id == product.id);
     calculateTotal();
-    notifyListeners();
   }
 
   void updateProduct(product, qty) {
@@ -52,13 +48,11 @@ class CartModel extends Model {
     if (cart[index].qty == 0){
       removeProduct(product);}
     calculateTotal();
-    notifyListeners();
   }
 
   void clearCart() {
     cart.forEach((f) => f.qty = 0);
     cart = [];
-    notifyListeners();
   }
 
   void calculateTotal() {

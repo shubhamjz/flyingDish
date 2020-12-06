@@ -14,11 +14,10 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
-          elevation: 0.0,
+          backgroundColor: Colors.indigo,
           title: Text(
-            'Kitchen 1',
-            style: TextStyle(color: Colors.black, fontSize: 15.0),
+            'Dashboard',
+            style: TextStyle(color: Colors.white, fontSize: 15.0),
           ),
         ),
         body: new SingleChildScrollView(

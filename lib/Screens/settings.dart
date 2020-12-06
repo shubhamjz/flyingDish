@@ -11,11 +11,11 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.indigo,
         elevation:0.0,
         title: Text(
           'settings', style:TextStyle(
-          color: Colors.black,
+          color: Colors.white,
         ),
         ),
       ),
