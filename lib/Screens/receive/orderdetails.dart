@@ -15,7 +15,7 @@ class OrderDetails extends StatefulWidget {
 }
 
 class _OrderDetailsState extends State<OrderDetails> {
-
+ int temp;
   FocusNode myFocusNode;
   TextEditingController editingController = TextEditingController();
   TextEditingController Qty = TextEditingController();
