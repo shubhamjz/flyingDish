@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:img_demo_app/Model/product.dart';
 import 'package:img_demo_app/View Model/ECOM/product_view_model.dart';
 import 'package:img_demo_app/Screens/COM/product_item.dart';
+import'package:img_demo_app/View Model/ECOM/cart_view_model.dart';
 
 class Com extends StatefulWidget {
   Com ({Key key, this.title}) : super(key: key);
@@ -26,7 +27,7 @@ class _ComState extends State<Com> {
 
   @override
   void initState() {
-    items.addAll(duplicateItems);
+    //items.addAll(duplicateItems);
     myFocusNode = FocusNode();
     super.initState();
     getAcceptedInterviewDetails();
@@ -77,13 +78,33 @@ class _ComState extends State<Com> {
           style: TextStyle(color: Colors.black, fontSize: 15.0),
         ),
         actions: [
-          // action button
-          IconButton(
-            icon: Icon( Icons.add_shopping_cart, color: Colors.black,),
-            onPressed: () {
-              Navigator.pushNamed(context, '/cart');
-            },
-          ),
+          Stack(
+            children: [
+              IconButton(
+
+                icon: Icon(Icons.add_shopping_cart,color: Colors.black,),
+                onPressed:() {
+                  Navigator.pushNamed(context, '/cart');
+                },
+              ),
+              Positioned(
+                top: 0,
+                right: 6,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '8',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
+            ],
+          )
 
         ],
       ),

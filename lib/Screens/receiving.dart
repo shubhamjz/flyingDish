@@ -70,7 +70,6 @@ class _ReceivingState extends State<Receiving> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-
                                 Icon(
                                   Icons.keyboard_arrow_right,
                                   size: 25.0,
