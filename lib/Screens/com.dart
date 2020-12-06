@@ -30,14 +30,14 @@ class _ComState extends State<Com> {
     //items.addAll(duplicateItems);
     myFocusNode = FocusNode();
     super.initState();
-    getAcceptedInterviewDetails();
+    getProductDetails();
   }
 
-  void getAcceptedInterviewDetails() async{
+  void getProductDetails() async{
     ProductViewModel  productViewModel = ProductViewModel();
     final data = await productViewModel.getProductListData();
     setState(() {
-      allProductList = data.getJobListFromData();
+      allProductList = data.getProductListFromData();
       filteredProductList = allProductList;
     });
   }

@@ -14,7 +14,7 @@ class ProductList{
     return ProductList(productList: dataList);
   }
 
-  List<Product> getJobListFromData(){
+  List<Product> getProductListFromData(){
     List<Product> productListArray = List<Product>();
     productList.forEach((element) {
       productListArray.add(element);

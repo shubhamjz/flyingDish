@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:img_demo_app/Model/Receive/sto_object.dart';
+import 'package:img_demo_app/Utilities/utilities.dart';
+import 'package:img_demo_app/Screens/widget/search_bar.dart';
+import 'package:img_demo_app/Utilities/constant.dart';
+import 'package:img_demo_app/View Model/Receive/receive_view_model.dart';
+import 'package:img_demo_app/Utilities/snack_bar_helper.dart';
 
 class OrderDetails extends StatefulWidget {
-  OrderDetails({Key key, this.title}) : super(key: key);
-  final String title;
+  final STOObject _stoObject;
+  OrderDetails(this._stoObject);
   @override
   _OrderDetailsState createState() => _OrderDetailsState();
 
@@ -16,285 +21,266 @@ class _OrderDetailsState extends State<OrderDetails> {
   TextEditingController Qty = TextEditingController();
   final duplicateItems = List<String>.generate(10, (i) => "TRK1Z0MY89202005161 $i");
   var items = List<String>();
-
+  TextEditingController _requiredQTYTextController = TextEditingController();
+  TextEditingController _receivedQTYTextController = TextEditingController();
+  ReceiveViewModel receiveViewModel = ReceiveViewModel();
+  final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     items.addAll(duplicateItems);
     myFocusNode = FocusNode();
     super.initState();
+    _requiredQTYTextController.text =  widget._stoObject.quantity.toString();
   }
 
+  void searchDataInArray(String searchString){
+    print(searchString);
+  }
 
-  void filterSearchResults(String query) {
-    List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(duplicateItems);
-    if(query.isNotEmpty) {
-      List<String> dummyListData = List<String>();
-      dummySearchList.forEach((item) {
-        if(item.contains(query)) {
-          dummyListData.add(item);
+  void updateReceiveOrderStatus() async{
+    // TODO: update code for service response 
+    print('updateReceiveOrderStatus');
+    //_formKey.currentState.save();
+    FocusScope.of(context).unfocus();
+    SnackBarHelper.showLoadingSnackBar(_scaffoldkey, 'updating details...');
+      try {
+        final result = receiveViewModel.updateReceiveOrderStatus(widget._stoObject.unique_id, widget._stoObject.quantity);
+        print('updateReceiveOrderStatus response received');
+        print(result);
+        SnackBarHelper.hideLoadingSnackBar(_scaffoldkey);
+        if (result == null) {
+          SnackBarHelper.showInSnackBar(_scaffoldkey, "Unable to update receive data", Colors.red);
+        } else {
+         // Navigator.pop(context, result);
         }
-      });
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        items.clear();
-        items.addAll(duplicateItems);
-      });
-    }
-
+      } catch(exception) {
+        print('exception');
+        print(exception);
+        print('Error while saving skill details : ' + exception.toString());
+        SnackBarHelper.hideLoadingSnackBar(_scaffoldkey);
+        SnackBarHelper.showInSnackBar(_scaffoldkey, 'Unable to update receive data!', Colors.red);
+      }
   }
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     var width = screenSize.width;
     var height = screenSize.height;
     return new Scaffold(
+      key: _scaffoldkey,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
           iconTheme: IconThemeData(
             color: Colors.black, //change your color here
           ),
-          title:Text('sku des',
+          title:Text('STO No : ' + widget._stoObject.sto_number.toString(),
             style: TextStyle(color: Colors.black, fontSize: 15.0),
           ),
         ),
       body: SingleChildScrollView(
         child: Container(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top:10.0),
-                child: Center(child: Text('Order Details (Recipt)')),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                  children: [
-                    Text('From: kitchen no'),
-                    Text('Total Items : 2')
-                  ],
+          child: Padding(
+            padding: const EdgeInsets.all(9.0),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top:10.0),
+                  child: Center(child: Text('Order Details (Receipt)',style: kH3FontTextStyleBlackBold())),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                  children: [
-                    Text('To:kitchen no'),
-                    Text('Created Date : 05/16/2020')
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top:20.0,right: 20.0,left: 20,),
-                child: TextField(
-                  focusNode: myFocusNode,
-                  onChanged: (value) {
-                    filterSearchResults(value);
-                  },
-                  controller: editingController,
-                  style: TextStyle(
-                      fontSize: 13.0,
+                Container(
+                  margin: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('From: ' + widget._stoObject.supplier_id,style: kNormalFontTextStyleBlack(),),
+                      Text('Total Items : ' + widget._stoObject.quantity.toString(),style: kNormalFontTextStyleBlack())
+                    ],
                   ),
-                  decoration: InputDecoration(
-                      isDense: true,                      // Added this
-                      contentPadding: EdgeInsets.all(0),
-
-                      labelStyle: TextStyle(
-                          color: Colors.orangeAccent,
-                      ),
-                      labelText: "Search",
-                      hintText: "Start Scanning or entered manually",
-                      prefixIcon: Icon(Icons.search,
-                        color:  Colors.orangeAccent,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                        borderSide: BorderSide(
-                          color: Colors.orangeAccent,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25.0)))),
                 ),
-              ),
-              Container(
-                height: 370,
-                child: Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      // return ListTile(
-                      //   title: Text('${items[index]}'),
-                      // );
-                      return GestureDetector(
-                        onTap: () {
-                          //  final snackBar = SnackBar(content: Text("${items[index]}"));
-                          // Scaffold.of(context).showSnackBar(snackBar);
-                          // print(items[index]);
-                          Navigator.pushNamed(context, '/orderskudetails');
-
-                        },
-                        child: Container(
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                          children: <Widget>[
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 6.0),
-                                  child: Text(
-                                    'items 1',
-                                    style: TextStyle(
-                                        fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.orange),
+                Container(
+                  margin: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('To: ' + widget._stoObject.requestor_id,style: kNormalFontTextStyleBlack()),
+                      Text('Created : ' + formatDateFromString(widget._stoObject.created_date),style: kNormalFontTextStyleBlack())
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top:20.0,right: 0.0,left: 0.0,),
+                  child: SearchBar(hintText: 'Search by Item No',searchTextController: editingController, onTextChanged: (value){
+                    searchDataInArray(value);
+                  },),
+                ),
+                Divider(
+                  height: 2.0,
+                  color: Colors.grey,
+                ),
+                Container(
+                  height: 370,
+                  child: Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        return Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 6.0),
+                                    child: Text(
+                                      widget._stoObject.sku_id,
+                                      style: TextStyle(
+                                          fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.orange),
+                                    ),
                                   ),
+                                 ]
                                 ),
-                               ]
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                    child: Text(
-                                        'Requried Quantity',
-                                      style: TextStyle(fontSize: 10.0, color: Colors.grey,),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                    child: Text(
-                                      'Requested Quantity ',
-                                      // subjectList[position],
-                                      style: TextStyle(fontSize: 10.0, color: Colors.grey,),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                    child: Text(
-                                      'Unit',
-                                      // subjectList[position],
-                                      style: TextStyle(fontSize: 10.0, color: Colors.grey,),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                    child: Text(
-                                      'Status',
-                                      // subjectList[position],
-                                      style: TextStyle(fontSize: 10.0, color: Colors.grey,),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                    child:  Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.grey,
+                                Row(
+                                  children: [
+                                    Column(
+                                      //crossAxisAlignment : CrossAxisAlignment.start,
+                                      mainAxisAlignment : MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                          child: Text(
+                                            'Required Quantity',
+                                            style: TextStyle(fontSize: 13.0, color: Colors.grey,),
+                                          ),
                                         ),
-                                        //borderRadius: BorderRadius.circular(10.0),
-                                      ),
-                                      width:width/4,
-                                      height:height/16,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextField(
-                                            decoration: InputDecoration(
-                                              fillColor: Colors.orange,
-                                                border: InputBorder.none,)
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                          child: Text(
+                                            widget._stoObject.quantity.toString(),
+                                            // subjectList[position],
+                                            style: TextStyle(fontSize: 14.0, color: Colors.grey,),
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                        ),
-                                        //borderRadius: BorderRadius.circular(10.0),
-                                      ),
-                                      width:width/4,
-                                      height:height/16,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextField(
-                                            decoration: InputDecoration(
-                                              fillColor: Colors.orange,
-                                              border: InputBorder.none,)
-                                        ),
-                                      ),
-                                    )
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                    child: Text(
-                                      'Unit',
-                                      // subjectList[position],
-                                      style: TextStyle(fontSize: 10.0, color: Colors.grey,),
+                                      ],
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                    child: Icon(
-                                      Icons.done,
-                                      size: 25.0,
-                                      color: Colors.green,
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                          child: Text(
+                                            'Received Quantity',
+                                            style: TextStyle(fontSize: 13.0, color: Colors.grey,),
+                                          ),
+                                        ),
+                                        Padding(
+                                            padding:
+                                            const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.grey,
+                                                ),
+                                                //borderRadius: BorderRadius.circular(10.0),
+                                              ),
+                                              width:width/4,
+                                              height:height/16,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: TextField(
+                                                    textAlign: TextAlign.center,
+                                                    textAlignVertical: TextAlignVertical.center,
+                                                    controller : _receivedQTYTextController,
+                                                    decoration: InputDecoration(
+                                                      fillColor: Colors.orange,
+                                                      border: InputBorder.none,
+                                                    ),
+                                                  onChanged: (value){
+
+                                                  },
+                                                ),
+                                              ),
+                                            )
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Divider(
-                                height: 2.0,
-                                color: Colors.grey,
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
+                                    Column(
+                                     children: [
+                                       Padding(
+                                         padding:
+                                         const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                         child: Text(
+                                           'Unit',
+                                           style: TextStyle(fontSize: 14.0, color: Colors.grey,),
+                                         ),
+                                       ),
+                                       Padding(
+                                         padding:
+                                         const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                         child: Text(
+                                           widget._stoObject.unit_of_measure,
+                                           // subjectList[position],
+                                           style: TextStyle(fontSize: 14.0, color: Colors.grey,),
+                                         ),
+                                       ),
+                                     ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                          child: Text(
+                                            'Status',
+                                            // subjectList[position],
+                                            style: TextStyle(fontSize: 14.0, color: Colors.grey,),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                          child: Icon(
+                                            Icons.done,
+                                            size: 25.0,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  height: 2.0,
+                                  color: Colors.grey,
+                                )
+                              ],
+                            ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              Center(
-                child: ButtonTheme(
-                  minWidth: width/3,
-                  height: 40.0,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {},
+                SizedBox(
+                  width: double.infinity,
+                  child: FlatButton(
                     color: Colors.orangeAccent,
                     textColor: Colors.white,
-                    child: Text('Submit'),
+                    //padding: EdgeInsets.all(15),
+                    splashColor: Colors.orange,
+                    onPressed: (){
+                          print('Submit button pressed');
+                          updateReceiveOrderStatus();
+                    },
+                    child: Text("Submit"),
                   ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),

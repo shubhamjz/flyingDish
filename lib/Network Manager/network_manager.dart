@@ -32,7 +32,23 @@ class NetworkManager {
       return decodedData;
     }
     else
-      throw decodedData;
+      return decodedData;
+  }
+
+  Future invokePostMethod(String method, var requestBody) async {
+    print('Inside invokePostMethod() method');
+    print('Calling POST method $method with request body $requestBody');
+    http.Response response = await http.post(method,
+        headers: defaultRequestHeaders,
+        body: requestBody,
+        encoding: Encoding.getByName("utf-8"));
+    int statusCode = response.statusCode;
+    var decodedData = jsonDecode(response.body);
+    print('Server response decoded data : $decodedData');
+    if (statusCode == 200 || statusCode == 201) {
+      return decodedData;
+    }
+    else throw decodedData;
   }
 
 }

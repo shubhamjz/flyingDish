@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:img_demo_app/Model/Receive/sto_object.dart';
+import 'package:img_demo_app/View Model/Receive/receive_view_model.dart';
+import 'package:img_demo_app/Utilities/snack_bar_helper.dart';
+import 'package:img_demo_app/Screens/receive/receive_item.dart';
+import 'package:img_demo_app/Screens/widget/search_bar.dart';
 
 class Receiving extends StatefulWidget {
 
@@ -8,96 +13,68 @@ class Receiving extends StatefulWidget {
 
 class _ReceivingState extends State<Receiving> {
 
+  final TextEditingController _textController = TextEditingController();
+  List<STOObject> allSTOList = List<STOObject>();
+  List<STOObject> filteredSTOList = List<STOObject>();
+  final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSTOtDetails();
+  }
 
+
+  void getSTOtDetails() async{
+    ReceiveViewModel  receiveViewModel = ReceiveViewModel();
+    //SnackBarHelper.showLoadingSnackBar(_scaffoldkey, 'Saving skill details...');
+    final data = await receiveViewModel.getSTOListData();
+    //SnackBarHelper.hideLoadingSnackBar(_scaffoldkey);
+    setState(() {
+      allSTOList = data.getSTOListFromData();
+      filteredSTOList = allSTOList;
+    });
+  }
+
+  void searchDataInArray(String searchString){
+    print(searchString);
+  }
+
+  @override
+
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     var screenSize = MediaQuery.of(context).size;
     var width = screenSize.width;
     var height = screenSize.height;
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
-          'Receiveing',
+          'Receive',
           style: TextStyle(color: Colors.black, fontSize: 15.0),
         ),
       ),
       body: Column(
         children: [
+          Container(
+            width: screenWidth,
+            child: SearchBar(hintText: 'Search by STO No',searchTextController: _textController, onTextChanged: (value){
+              searchDataInArray(value);
+            },),
+          ),
           Expanded(
-            child: GestureDetector(
-              onTap: () {
-                // final snackBar = SnackBar(content: Text("Tap"));
-                Navigator.pushNamed(context, '/orderdetails');
-                // Scaffold.of(context).showSnackBar(snackBar);
-              },
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, position) {
-                  return Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 6.0),
-                                child: Text(
-                                  'Sto No',
-                                  style: TextStyle(
-                                      fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.orange),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
-                                child: Text(
-                                  'created date',
-                                  // subjectList[position],
-                                  style: TextStyle(fontSize: 10.0, color: Colors.grey,),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.keyboard_arrow_right,
-                                  size: 25.0,
-                                  color: Colors.grey,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "status",
-                                    style: TextStyle(color: Colors.grey, fontSize: 9.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        height: 2.0,
-                        color: Colors.grey,
-                      )
-                    ],
-                  );
-                },
-
-
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: ListView.builder(
+                  itemCount: filteredSTOList.length,
+                    itemBuilder: (context, position) => ReceiveItem(filteredSTOList[position])
+                ),
               ),
-            ),
           ),
         ],
       ),
