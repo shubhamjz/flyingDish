@@ -8,6 +8,7 @@ import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   runApp(new MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: new MyApp(),
   ));
 }

@@ -6,6 +6,7 @@ import './Screens/receive/orderdetails.dart';
 import './Screens/receive/orderskudetails.dart';
 import './Screens/receive/receivingsummary.dart';
 import './Screens/settings.dart';
+import './Screens/cart.dart';
 class Routes extends StatefulWidget {
   @override
   _RoutesState createState() => _RoutesState();
@@ -23,6 +24,7 @@ class _RoutesState extends State<Routes> {
         '/orderskudetails':(context)=>OrderSkuDetails(),
         '/receivingsummary':(context)=>ReceivingSummary(),
         '/settings':(context)=>Settings(),
+        '/cart':(context)=>CartPage(),
        // '/login':(context)=>Login(),
 
       },

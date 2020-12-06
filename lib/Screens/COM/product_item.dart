@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:img_demo_app/Model/product.dart';
+import'package:img_demo_app/View Model/ECOM/cart_view_model.dart';
 
 class ProductItem extends StatefulWidget {
+  
+
   @override
   _ProductItemState createState() => _ProductItemState();
   final Product productData;
-  ProductItem(this.productData);
+   ProductItem(this.productData);
+
 }
 
 class _ProductItemState extends State<ProductItem> {
+
+  CartModel model = CartModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    var width = screenSize.width;
+    var height = screenSize.height;
     return Card(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -54,34 +71,64 @@ class _ProductItemState extends State<ProductItem> {
                   child: Text(widget.productData.unit_of_measure)),
               ////
 
-              if( widget.productData.qty != 0)
-                new IconButton(
-                  icon: new Icon(Icons.remove),
-                  onPressed: () {
-                    if (widget.productData.qty > 0) {
-                      widget.productData.qty--;
-                    }
-                    //model.addProduct(_products[index]);
-                    // model.removProduct(
-                    //     _products[index]);
-                    // //model.updateProduct(_products[index],
-                    //     _products[index].qty);
-
-                  },
-                ),
-              if(widget.productData.qty != 0)
-                new Text(
-                    widget.productData.qty.toString()),
-              if(widget.productData.qty != 0)
-                new IconButton(
-                    icon: new Icon(Icons.add),
-                    onPressed: () {
-                      setState(() {
-                        widget.productData.qty++;
-                      });
-
-                    }),
-              // _products[index].qty ==0? new IconButton(icon: new Icon(Icons.add) ):new Container(),
+         Row(
+           children: [
+             if( widget.productData.qty != 0)
+               GestureDetector(
+                 onTap:(){
+                   if (widget.productData.qty > 0) {
+                     setState(() {
+                       widget.productData.qty--;
+                     });
+                     //  widget.productData.qty--;
+                   }
+                  // print(widget.productData.sku_description);
+                 },
+                 child: Container(
+                   width: 20.0,
+                   height: 20.0,
+                   decoration: BoxDecoration(
+                     color: Colors.orange,
+                     borderRadius: BorderRadius.circular(4.0),
+                   ),
+                   child: Icon(
+                      Icons.remove,
+                      color: Colors.white,
+                      size: 15.0,
+                      ),
+                 ),
+               ),
+             if(widget.productData.qty != 0)
+               Padding(
+                 padding: const EdgeInsets.only(left:10,right:10),
+                 child: new Text(
+                     widget.productData.qty.toString()),
+               ),
+             if(widget.productData.qty != 0)
+               GestureDetector(
+                 onTap: (){
+                  //model.addProduct();
+                     setState(() {
+                       widget.productData.qty++;
+                     });
+                 },
+                 child: Container(
+                   width: 20.0,
+                   height: 20.0,
+                   decoration: BoxDecoration(
+                     color: Colors.orange,
+                     borderRadius: BorderRadius.circular(4.0),
+                   ),
+                   child: Icon(
+                       Icons.add,
+                       color: Colors.white,
+                       size: 15.0,
+                 ),
+                 ),
+               )
+           ],
+         ),
+                  // _products[index].qty ==0? new IconButton(icon: new Icon(Icons.add) ):new Container(),
               if(widget.productData.qty == 0)
                 ButtonTheme(
                   //minWidth: 60.0,
@@ -89,13 +136,12 @@ class _ProductItemState extends State<ProductItem> {
                   child: RaisedButton(
                     color: Colors.orangeAccent,
                     onPressed: () {
-                      if (widget.productData.qty > 0){
                       setState(() {
-                        widget.productData.qty--;
-                      });}
-
-                      // model.addProduct(
-                      //     _products[index]);
+                        widget.productData.qty++;
+                      });
+                     // model.addProduct();
+                     // model.addProduct(widget.productData);
+                      //cartmodel.addProduct(widget.productData);
                       // //model.updateProduct(_products[index],
                       //     _products[index].qty);
                       //print(count);

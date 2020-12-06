@@ -11,11 +11,11 @@ class _MoreState extends State<More> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.indigo,
         elevation:0.0,
         title: Text(
           'More', style:TextStyle(
-          color: Colors.black,
+          color: Colors.white,
         ),
         ),
       ),
