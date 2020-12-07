@@ -48,8 +48,14 @@ class _ComState extends State<Com> {
     setState(() {
       filteredProductList = allProductList.where((element) => element.make.toLowerCase().contains(searchString.toLowerCase())).toList();
     });
-
   }
+
+  void filterByCategory(String searchString) {
+    setState(() {
+      filteredProductList = allProductList.where((element) => element.inventory_type.toLowerCase().contains(searchString.toLowerCase())).toList();
+    });
+  }
+
   void allItem(){
 
     setState(() {
@@ -62,7 +68,7 @@ class _ComState extends State<Com> {
   }
   void grocerySearchResults(String searchString) {
     setState(() {
-      filteredProductList = allProductList.where((element) => element.make.toLowerCase().contains(searchString.toLowerCase())).toList();
+      filterByCategory(searchString);
      _allhasBeenPressed = false;
     _grochasBeenPressed = true;
     _veggieshasBeenPressed = false;
@@ -72,7 +78,7 @@ class _ComState extends State<Com> {
   }
   void appliancesSearchResults(String searchString) {
     setState(() {
-      filteredProductList = allProductList.where((element) => element.make.toLowerCase().contains(searchString.toLowerCase())).toList();
+      filterByCategory(searchString);
       _allhasBeenPressed = false;
       _grochasBeenPressed = false;
       _veggieshasBeenPressed = false;
@@ -82,15 +88,12 @@ class _ComState extends State<Com> {
   }
   void veggisSearchResults(String searchString) {
     setState(() {
-      filteredProductList = allProductList.where((element) => element.make.toLowerCase().contains(searchString.toLowerCase())).toList();
+      filterByCategory(searchString);
       _allhasBeenPressed = false;
       _grochasBeenPressed = false;
       _veggieshasBeenPressed = true;
       _aplanceBeenPressed = false;
     });
-
-
-
   }
   @override
 
@@ -166,9 +169,9 @@ class _ComState extends State<Com> {
                     child: new RaisedButton(
                         textColor: _veggieshasBeenPressed ? Colors.white : Colors.orangeAccent,
                         color: _veggieshasBeenPressed ? Colors.orangeAccent : Colors.white,
-                        child: Text("Veggis"),
+                        child: Text("Appliances"),
                         onPressed: () {
-                          veggisSearchResults("veggis");
+                          veggisSearchResults("Appliances");
                         }),
                   ),
                   Padding(
@@ -178,7 +181,7 @@ class _ComState extends State<Com> {
                         color: _grochasBeenPressed ? Colors.orangeAccent : Colors.white,
                         child: Text("Grocery"),
                         onPressed: () {
-                          grocerySearchResults("grocery");
+                          grocerySearchResults("Grocery");
                         }),
                   ),
                   Padding(
@@ -186,9 +189,9 @@ class _ComState extends State<Com> {
                     child: new RaisedButton(
                         textColor: _aplanceBeenPressed ? Colors.white : Colors.orangeAccent,
                         color: _aplanceBeenPressed ? Colors.orangeAccent : Colors.white,
-                        child: Text("Appliances"),
+                        child: Text("Consumable"),
                         onPressed: () {
-                          appliancesSearchResults("samsung");
+                          appliancesSearchResults("Consumable");
                         } ),
                   )
                 ],

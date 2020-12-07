@@ -11,11 +11,16 @@ class ReceiveViewModel{
   Future<STOList> getSTOListData() async {
     final response = await manager.invokePostMethod(API_STO_PRODUCTLIST,json.encode(
         {
-          'status': 'Open',
+          'status': 'Fullfilled',
         }
     ));
-    final data = STOList.fromJson(response['data']['orders']);
-    return data;
+    if(response['status'] == 'Success') {
+      final data = STOList.fromJson(response['data']['orders']);
+      return data;
+    } else {
+      throw (response['errorCode']);
+    }
+
   }
 
   Future<String> updateReceiveOrderStatus(List<STOObject> stoObjects) async {

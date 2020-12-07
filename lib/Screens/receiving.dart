@@ -3,6 +3,7 @@ import 'package:img_demo_app/Model/Receive/order_object.dart';
 import 'package:img_demo_app/View Model/Receive/receive_view_model.dart';
 import 'package:img_demo_app/Screens/receive/receive_item.dart';
 import 'package:img_demo_app/Screens/widget/search_bar.dart';
+import 'package:img_demo_app/Utilities/constant.dart';
 
 class Receiving extends StatefulWidget {
 
@@ -27,11 +28,16 @@ class _ReceivingState extends State<Receiving> {
 
   void getSTOtDetails() async{
     ReceiveViewModel  receiveViewModel = ReceiveViewModel();
-    final data = await receiveViewModel.getSTOListData();
-    setState(() {
-      allSTOList = data.getSTOListFromData();
-      filteredSTOList = allSTOList;
-    });
+    try {
+      final data = await receiveViewModel.getSTOListData();
+      setState(() {
+        allSTOList = data.getSTOListFromData();
+        filteredSTOList = allSTOList;
+      });
+    } catch (error) {
+      showAlertDialog(context,'Unable to fetch Data');
+    }
+
   }
 
   void searchDataInArray(String searchString){
