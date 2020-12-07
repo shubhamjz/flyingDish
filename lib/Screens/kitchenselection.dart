@@ -13,12 +13,12 @@ class _KitchenSelectionState extends State<KitchenSelection> {
     var height = screenSize.height;
     return Scaffold(
         appBar: new AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor:Colors.indigo,
           automaticallyImplyLeading: false, //No more green
-          elevation: 0.0, //Shadow gone
+         // elevation: 0.0, //Shadow gone
           title: new Text(
             'Select Kitchen !',
-            style: new TextStyle(color: Colors.orange),
+            style: new TextStyle(color: Colors.white),
           ),
         ),
         body: new SingleChildScrollView(
@@ -39,7 +39,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 1',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -60,7 +60,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 2',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -85,7 +85,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 3',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -106,7 +106,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 4',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -131,7 +131,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 5',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -152,7 +152,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 6',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -177,7 +177,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 7',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -198,7 +198,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 8',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -223,7 +223,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 9',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -244,7 +244,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                         child: RaisedButton(
                           color: Colors.white,
                           child: Text('Kitchen 10',
-                              style: TextStyle(color: Colors.orangeAccent)),
+                              style: TextStyle(color: Colors.orange,fontSize:18,fontWeight:FontWeight.bold)),
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
@@ -253,7 +253,7 @@ class _KitchenSelectionState extends State<KitchenSelection> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ));

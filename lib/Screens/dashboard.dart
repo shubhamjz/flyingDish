@@ -39,7 +39,7 @@ class _DashboardState extends State<Dashboard> {
                  children: [
                    Padding(
                      padding: const EdgeInsets.all(8.0),
-                     child: new Text('Hi FCT',
+                     child: new Text('Hi David',
                      style: TextStyle(
                        color: Colors.white,
                        fontSize:18.0
@@ -74,9 +74,9 @@ class _DashboardState extends State<Dashboard> {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left:0.0 , top: 20),
+                            padding: const EdgeInsets.only(right:155 , top: 20),
                             child: Text(
-                              'Return Item.',
+                              'Receive Item',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -85,7 +85,7 @@ class _DashboardState extends State<Dashboard> {
                           Padding(
                             padding: const EdgeInsets.only(left:10.0),
                             child: Text(
-                              'This Is notification',
+                              'There are few shipments to be received',
                               style: TextStyle(
 
                               ),
@@ -96,33 +96,6 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                   Divider(),
-                  Row(
-                    children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left:0.0 , top:10),
-                            child: Text(
-                              'Return Item.',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left:10.0),
-                            child: Text(
-                              'This Is notification',
-                              style: TextStyle(
-
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  Divider()
         ])));
   }
 }

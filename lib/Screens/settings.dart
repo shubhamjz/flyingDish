@@ -35,7 +35,7 @@ class _SettingsState extends State<Settings> {
                       child: Text(
                         'About',
                         style: TextStyle(
-                            fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.grey),
+                            fontSize: 15.0, color: Colors.black),
                       ),
                     ),
                   ],
@@ -81,7 +81,7 @@ class _SettingsState extends State<Settings> {
                           child: Text(
                             'Kitchen',
                             style: TextStyle(
-                                fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontSize: 15.0, color: Colors.black),
                           ),
                         ),
                       ],
@@ -91,8 +91,8 @@ class _SettingsState extends State<Settings> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-
-                          Text("Kitchen 1")
+                          Text("Kitchen 1",
+                          style:TextStyle(fontSize: 15.0, fontWeight:FontWeight.bold,color:Colors.orange),)
                         ],
                       ),
                     ),

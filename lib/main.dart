@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [Colors.red, Colors.orange]),
+              colors: [Colors.redAccent, Colors.orangeAccent]),
         ),
         child: SplashScreen(
           seconds: 2,
@@ -37,14 +37,15 @@ class _MyAppState extends State<MyApp> {
               colors: [Colors.red, Colors.orange]) ,
           navigateAfterSeconds: new Routes(),
           title: new Text(
-            'Welcome To Img',
+            'Welcome to Scava',
             style: new TextStyle(fontWeight: FontWeight.bold,  color: Colors.white, fontSize: 20.0),
           ),
           image: new Image.asset(
               'assets/logo&icons/splash.png'),
           photoSize: 150.0,
           //backgroundColor: Colors.white,
-          loaderColor: Colors.white,
+          useLoader: false,
+          //loaderColor: Colors.white,
         ),
       )
     );

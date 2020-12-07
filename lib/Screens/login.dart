@@ -21,14 +21,14 @@ class _LoginPageState extends State<Login> {
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [Colors.red, Colors.orange]),
+              colors: [Colors.redAccent, Colors.orangeAccent]),
         ),
         child: ListView(
           children: <Widget>[
             Column(
               children: <Widget>[
                 Row(children: <Widget>[
-                  VerticalText(),
+                 // VerticalText(),
                   TextLogin(),
                 ]),
                 InputEmail(),

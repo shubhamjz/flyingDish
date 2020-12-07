@@ -33,7 +33,7 @@ class _MoreState extends State<More> {
                         child: Text(
                           'Request PI Count',
                           style: TextStyle(
-                              fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.grey),
+                              fontSize: 15.0, color: Colors.black),
                         ),
                       ),
                     ],
@@ -47,7 +47,7 @@ class _MoreState extends State<More> {
                         Icon(
                           Icons.keyboard_arrow_right,
                           size: 25.0,
-                          color: Colors.grey,
+                          color: Colors.black,
                         ),
                       ],
                     ),
@@ -62,12 +62,9 @@ class _MoreState extends State<More> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  //  final snackBar = SnackBar(content: Text("${items[index]}"));
-                  // Scaffold.of(context).showSnackBar(snackBar);
-                  // print(items[index]);
+                behavior: HitTestBehavior.translucent,
+                onTap:(){
                   Navigator.pushNamed(context, '/settings');
-
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +78,7 @@ class _MoreState extends State<More> {
                           child: Text(
                             'Settings',
                             style: TextStyle(
-                                fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontSize: 15.0, color: Colors.black),
                           ),
                         ),
                       ],
@@ -91,14 +88,45 @@ class _MoreState extends State<More> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-
                           Icon(
                             Icons.keyboard_arrow_right,
                             size: 25.0,
-                            color: Colors.grey,
+                            color: Colors.black,
                           ),
                         ],
                       ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:12.0),
+                child: Divider(
+                  height: 2.0,
+                  color: Colors.grey,
+                ),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap:(){
+                  Navigator.pushNamed(context, '/');
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding:
+                          const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 6.0),
+                          child: Text(
+                            'Log out',
+                            style: TextStyle(
+                                fontSize: 15.0, color: Colors.black),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

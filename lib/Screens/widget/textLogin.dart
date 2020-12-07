@@ -8,29 +8,30 @@ class TextLogin extends StatefulWidget {
 class _TextLoginState extends State<TextLogin> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30.0, left: 10.0),
-      child: Container(
-        //color: Colors.green,
-        height: 200,
-        width: 200,
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 60,
-            ),
-            Center(
-              child: Text(
-                'SCAVA',
-                style: TextStyle(
-                  fontSize: 40,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900
-                ),
+    var screenSize = MediaQuery.of(context).size;
+    var width = screenSize.width;
+    var height = screenSize.height;
+    return Container(
+      margin :new EdgeInsets.only(top:60),
+     // color: Colors.green,
+      height: 150,
+      width: width,
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 60,
+          ),
+          Center(
+            child: Text(
+              'SCAVA',
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
