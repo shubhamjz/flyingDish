@@ -262,7 +262,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       style: TextStyle(fontSize: 14.0, color: Colors.grey,),
                                     ),
                                   ),
-                                  //if(skuObject.actualReceived > 0)
+                                  if(skuObject.actualReceived ==  skuObject.quantity)
                                     Padding(
                                       padding:
                                       const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
@@ -272,6 +272,17 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         color: Colors.green,
                                       ),
                                     ),
+                                  if(skuObject.actualReceived !=  skuObject.quantity)
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
+                                      child: Icon(
+                                        Icons.close,
+                                        size: 25.0,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+
                                 ],
                               ),
                               Divider(
