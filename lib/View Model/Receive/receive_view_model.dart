@@ -36,7 +36,7 @@ class ReceiveViewModel{
       return response['errorCode'];
     } else {
       print('Success');
-      return response['data'];
+      return 'Order updated';
     }
 
   }

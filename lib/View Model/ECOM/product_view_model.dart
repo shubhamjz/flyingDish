@@ -42,7 +42,7 @@ class ProductViewModel {
         "quantity": element.qty.toString(),
         "delivery_method": "Shipping",
         "unit_of_measure": element.unit_of_measure,
-        "created_by": "Adam"
+        "created_by": "David"
       };
 
       print(config);

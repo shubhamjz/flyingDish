@@ -42,7 +42,7 @@ class SOHItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Received Quantity : ' + sohData.quantity.toString(),
+                        'In Stock : ' + sohData.quantity.toString(),
                         // subjectList[position],
                         style: kH3FontTextStyleGrey(),
                       ),

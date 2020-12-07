@@ -39,7 +39,7 @@ class _TransferState extends State<Transfer> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.indigo,
         title: Text(
-            'SOH', style:TextStyle(
+            'Stock On Hand', style:TextStyle(
           color: Colors.white,
         ),
         ),

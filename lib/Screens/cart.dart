@@ -34,7 +34,7 @@ class _CartPageState extends State<CartPage> {
     ProductViewModel  productViewModel = ProductViewModel();
     final data = await productViewModel.placedOrder(widget.allProductList);
     print(data);
-    showAlertDialog(context,'STO Confermation no is ' + data);
+    showAlertDialog(context,'STO Confirmation no is ' + data);
   }
 
   @override
