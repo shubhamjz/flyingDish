@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:img_demo_app/Network Manager/network_manager.dart';
 import 'package:img_demo_app/Model/Receive/sto_list.dart';
+import 'package:img_demo_app/Model/Receive/sto_object.dart';
 import 'package:img_demo_app/Utilities/server_api_constant.dart';
 
 class ReceiveViewModel{
@@ -10,23 +11,19 @@ class ReceiveViewModel{
   Future<STOList> getSTOListData() async {
     final response = await manager.invokePostMethod(API_STO_PRODUCTLIST,json.encode(
         {
-          'status': 'Fullfilled',
+          'status': 'Open',
         }
     ));
-    print(response);
-    final data = STOList.fromJson(response['data']);
-    print(data);
+    final data = STOList.fromJson(response['data']['orders']);
     return data;
   }
 
-  Future<String> updateReceiveOrderStatus(int uniqueId, int quantity) async {
+  Future<String> updateReceiveOrderStatus(List<STOObject> stoObjects) async {
+
+    var formatedData = getFormatedReceivedData(stoObjects);
 
     final response = await manager.invokePostMethod(API_UPDATE_RECEIVEDSTATUS,json.encode(
-        [{
-          'unique_id' : uniqueId,
-          'status': 'Received',
-          'received_quantity' : quantity,
-        }]
+        formatedData
     ));
     print('updateReceiveOrderStatus response received');
     if(response['status'] == 'Failure') {
@@ -37,5 +34,20 @@ class ReceiveViewModel{
       return response['data'];
     }
 
+  }
+
+  dynamic getFormatedReceivedData(List<STOObject> STOObjects){
+    final data = [];
+    for (STOObject element in STOObjects){
+      Map<String, dynamic> config =
+      {
+        'unique_id': element.unique_id,
+        "status": "Received",
+        "received_quantity": element.actualReceived,
+      };
+      data.add(config);
+    }
+    print(data);
+    return data;
   }
 }

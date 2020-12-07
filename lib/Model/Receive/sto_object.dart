@@ -1,6 +1,5 @@
 class STOObject{
   int unique_id;
-  int created_byunique_id;
   int sto_number;
   int quantity;
   int line_item_id;
@@ -8,6 +7,7 @@ class STOObject{
   String requestor_id;
   String supplier_id;
   String sku_id;
+  String sku_description;
   String status;
   String delivery_method;
   String created_by;
@@ -15,8 +15,9 @@ class STOObject{
   String unit_of_measure;
   String created_date;
   String last_updated_date;
+  int actualReceived = 0;
 
-  STOObject({this.unit_of_measure,this.sku_id,this.created_by,this.created_date,this.delivery_method,this.last_updated_by,this.last_updated_date,this.line_item_id,this.quantity,this.received_quantity,this.requestor_id,this.status,this.sto_number,this.supplier_id,this.unique_id});
+  STOObject({this.unit_of_measure,this.sku_id,this.sku_description,this.created_by,this.created_date,this.delivery_method,this.last_updated_by,this.last_updated_date,this.line_item_id,this.quantity,this.received_quantity,this.requestor_id,this.status,this.sto_number,this.supplier_id,this.unique_id,this.actualReceived});
 
   STOObject.fromJson(Map<String, dynamic> json) {
     unique_id = json['unique_id'];
@@ -27,6 +28,7 @@ class STOObject{
     requestor_id = json['requestor_id'];
     supplier_id = json['supplier_id'];
     sku_id = json['sku_id'];
+    sku_description = json['sku_description'];
     status = json['status'];
     delivery_method = json['delivery_method'];
     created_by = json['created_by'];
@@ -46,6 +48,7 @@ class STOObject{
     data['requestor_id'] = this.requestor_id;
     data['supplier_id'] = this.supplier_id;
     data['sku_id'] = this.sku_id;
+    data['sku_description'] = this.sku_description;
     data['status'] = this.status;
     data['delivery_method'] = this.delivery_method;
     data['created_by'] = this.created_by;

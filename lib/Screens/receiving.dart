@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:img_demo_app/Model/Receive/sto_object.dart';
+import 'package:img_demo_app/Model/Receive/order_object.dart';
 import 'package:img_demo_app/View Model/Receive/receive_view_model.dart';
 import 'package:img_demo_app/Screens/receive/receive_item.dart';
 import 'package:img_demo_app/Screens/widget/search_bar.dart';
@@ -13,8 +13,8 @@ class Receiving extends StatefulWidget {
 class _ReceivingState extends State<Receiving> {
 
   final TextEditingController _textController = TextEditingController();
-  List<STOObject> allSTOList = List<STOObject>();
-  List<STOObject> filteredSTOList = List<STOObject>();
+  List<OrderObject> allSTOList = List<OrderObject>();
+  List<OrderObject> filteredSTOList = List<OrderObject>();
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -27,9 +27,7 @@ class _ReceivingState extends State<Receiving> {
 
   void getSTOtDetails() async{
     ReceiveViewModel  receiveViewModel = ReceiveViewModel();
-    //SnackBarHelper.showLoadingSnackBar(_scaffoldkey, 'Saving skill details...');
     final data = await receiveViewModel.getSTOListData();
-    //SnackBarHelper.hideLoadingSnackBar(_scaffoldkey);
     setState(() {
       allSTOList = data.getSTOListFromData();
       filteredSTOList = allSTOList;
